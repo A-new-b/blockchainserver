@@ -1,4 +1,5 @@
 from record_block.block import RecordBlock
+from conn.connection import connect
 
 
 class BlockChain:
@@ -38,7 +39,6 @@ class BlockChain:
             print(block.hash_test())
             print(block.previous_hash)
             print(blocks[blocks.index(block) - 1].hash == block.previous_hash)
-            print()
             if block.hash_test() != 1 or block.previous_hash != blocks[blocks.index(block) - 1].hash:
                 flag = 0
                 break
@@ -52,3 +52,17 @@ class BlockChain:
         '''
         self.blocks.clear()
         self.blocks.append(new_block)
+
+
+def get_blocks_by_device_id(device_id):
+    try:
+        db = connect()
+        cursor = db.cursor()
+        sql = "select id, device_id, unix_timestamp(create_time) as create_time, data_content, " \
+              "to_base64(hash) as 'hash', to_base64(prev_hash) as prev_hash from blocks where device_id = %s"
+        cursor.execute(sql, device_id)
+        res = cursor.fetchall()
+
+        return res
+    except:
+        return None

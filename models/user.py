@@ -4,8 +4,8 @@ from conn.connection import connect
 class User:
     def __init__(self, device_id):
         self.device_id = device_id
-        self.user_name = False
-        self.user_password = 1
+        self.user_name = ""
+        self.user_password = ""
         if self.get_user():
             self.user_name = self.get_user()[0]
             self.user_password = self.get_user()[1]

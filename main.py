@@ -4,6 +4,7 @@ from sanic_session import Session, InMemorySessionInterface
 
 from controller.auth import authorized
 import controller.auth
+import controller.block
 
 from conn.connection import connect
 from sanic.log import logger
@@ -19,15 +20,16 @@ async def test(request):
     return response.json({"hello": "world"})
 
 
-# 公告
 # 鉴权装饰器位于 controller.auth
-@app.route("/post")
+@app.route("/api/notices")
 @authorized
+@doc.description('公告')
 async def test(request):
     return response.json({"hello": "world"})
 
 
 app.add_route(controller.auth.Auth.as_view(), '/api/login')
+app.add_route(controller.block.Block.as_view(), '/api/blocks')
 
 if __name__ == "__main__":
     app.run(debug=True, access_log=True)

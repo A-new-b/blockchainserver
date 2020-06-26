@@ -4,7 +4,7 @@ from sanic import response
 from sanic.response import json
 from sanic_session import Session
 
-from models.user import User
+from models.user import get_user_by_device_id
 from sanic.views import HTTPMethodView
 from sanic_openapi import doc
 
@@ -25,13 +25,12 @@ class Auth(HTTPMethodView):
     def post(self, req):
         try:
             device_id = req.json['device_id']
-            print(device_id)
-            login_user = User(device_id)
-            if login_user.user_password == "" or req.json['password'] != login_user.user_password:
+            login_user = get_user_by_device_id(device_id)
+            if login_user['password'] == "" or req.json['password'] != login_user['password']:
                 return response.json({'msg': '帐号不存在或密码错误'}, status=400)
-            else:
-                req.ctx.session['user'] = login_user
-                return response.json({'username': login_user.user_name, 'password': login_user.user_password})
+            # 默认无法序列化实体类，使用 dict 代替
+            req.ctx.session['user'] = login_user
+            return response.json(login_user)
         except Exception as e:
             print(e)
             return response.json({'msg': '服务器错误'}, status=500)

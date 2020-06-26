@@ -18,7 +18,8 @@ POOL = PooledDB(
     user=config['user'],
     password=config['password'],
     database=config['database'],
-    charset=config['charset']
+    charset=config['charset'],
+    cursorclass=pymysql.cursors.DictCursor
 )
 
 

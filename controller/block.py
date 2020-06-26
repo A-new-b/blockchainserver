@@ -13,7 +13,7 @@ class Block(HTTPMethodView):
     考虑使用中间层进行鉴权
     """
 
-    @doc.description('公告，需要 Cookie')
+    @doc.description('区块，需要 Cookie')
     # @authorized
     def get(self, req):
         user = req.ctx.session.get('user')

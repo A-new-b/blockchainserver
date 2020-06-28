@@ -39,7 +39,7 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
         PASSWORD: ${{ secrets.PASSWORD }}
-        source: "."
+        source: "./"
         target: "/root/blockchainserver/"
 
     - name: Executing remote command

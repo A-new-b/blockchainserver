@@ -3,12 +3,7 @@ from sanic_openapi import swagger_blueprint, doc
 from sanic_session import Session, InMemorySessionInterface
 
 from controller.auth import authorized
-import controller.auth
 import controller.block
-
-from conn.connection import connect
-from sanic.log import logger
-from sanic.response import text
 
 app = Sanic(name='blockChainServer')
 app.blueprint(swagger_blueprint)

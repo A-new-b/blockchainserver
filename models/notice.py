@@ -5,7 +5,7 @@ def get_notices() -> dict:
     try:
         db = connect()
         cursor = db.cursor()
-        sql = "select id, title, content, create_time " \
+        sql = "select id, title, content, unix_timestamp(create_time) as create_time " \
               "from notices"
         cursor.execute(sql)
         res = cursor.fetchall()

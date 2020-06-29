@@ -43,6 +43,27 @@ def check_authorization(req):
 def authorized(f):
     @wraps(f)
     async def decorated_function(request, *args, **kwargs):
+        print(request)
+        print(args)
+        print(kwargs)
+        login_user = check_authorization(request)
+
+        # 用户未登录
+        if login_user is None:
+            return json({'msg': '未登录'}, 403)
+
+        # 用户已登录
+        # 运行 handler 方法，并返回 response
+        resp = await f(request, *args, **kwargs)
+        return resp
+
+    return decorated_function
+
+
+def class_authorized(f):
+    @wraps(f)
+    async def decorated_function(self, request, *args, **kwargs):
+        print(request)
         login_user = check_authorization(request)
 
         # 用户未登录

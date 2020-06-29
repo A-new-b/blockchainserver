@@ -3,7 +3,9 @@ from sanic_openapi import swagger_blueprint, doc
 from sanic_session import Session, InMemorySessionInterface
 
 from controller.auth import authorized
-import controller
+import controller.auth
+import controller.block
+import controller.notice
 
 app = Sanic(name='blockChainServer')
 app.blueprint(swagger_blueprint)
@@ -11,14 +13,6 @@ Session(app, interface=InMemorySessionInterface())
 
 
 @app.route("/")
-async def test(request):
-    return response.json({"hello": "world"})
-
-
-# 鉴权装饰器位于 controller.auth
-@app.route("/api/notices")
-@authorized
-@doc.description('公告')
 async def test(request):
     return response.json({"hello": "world"})
 

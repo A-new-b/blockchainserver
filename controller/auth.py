@@ -72,7 +72,7 @@ def class_authorized(f):
 
         # 用户已登录
         # 运行 handler 方法，并返回 response
-        resp = await f(request, *args, **kwargs)
+        resp = f(self, request, *args, **kwargs)
         return resp
 
     return decorated_function

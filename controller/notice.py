@@ -1,6 +1,5 @@
 from sanic import response
-from sanic_openapi import swagger_blueprint, doc
-from sanic.response import json
+from sanic_openapi import doc
 from sanic.views import HTTPMethodView
 
 from controller.auth import class_authorized

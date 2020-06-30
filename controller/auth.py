@@ -2,7 +2,6 @@ from functools import wraps
 
 from sanic import response
 from sanic.response import json
-from sanic_session import Session
 
 from models.user import get_user_by_device_id
 from sanic.views import HTTPMethodView
@@ -26,7 +25,7 @@ class Auth(HTTPMethodView):
         try:
             device_id = req.json['device_id']
             login_user = get_user_by_device_id(device_id)
-            if login_user['password'] == "" or req.json['password'] != login_user['password']:
+            if login_user is None or req.json['password'] != login_user['password']:
                 return response.json({'msg': '帐号不存在或密码错误'}, status=400)
             # 默认无法序列化实体类，使用 dict 代替
             req.ctx.session['user'] = login_user
